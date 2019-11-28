@@ -36,8 +36,13 @@ FPS = 30
 FONT_SIZE = 15
 SCORE_COLOR = (255, 255, 255)
 GAME_SOUNDTRACK = "assets/snake.mp3"
+GAME_SOUNDTRACK_VOLUME = 0.5
+QUIT_KEY = "X"
 
-pygame.mixer.init()
+
+# Init Game Soundtrack
+pygame.mixer.init(frequency=22050, size=-16, channels=2, buffer=4096)
+pygame.mixer.music.set_volume(GAME_SOUNDTRACK_VOLUME)
 pygame.mixer.music.load(GAME_SOUNDTRACK)
 pygame.mixer.music.play()
 
@@ -124,11 +129,17 @@ if __name__ == '__main__':
 
         for event in pygame.event.get():
             
-            if event.type == QUIT:
-                print('goodbye')
+            # To Quit Game
+            if event.type == pygame.JOYBUTTONDOWN:
+                print('Goodby Man! Visit www.jaccon.com.br')
+                pygame.quit()
+                sys.exit()
+            elif event.type == QUIT:
+                print('Goodby Man! Visit www.jaccon.com.br')
                 pygame.quit()
                 sys.exit()
                  
+            # Directional
             elif event.type == pygame.JOYAXISMOTION:
                 if j.get_axis(1) <= -1:
                     snake.point(UP)
@@ -145,7 +156,7 @@ if __name__ == '__main__':
         snake.draw(surface)
         apple.draw(surface)
         font = pygame.font.Font(None, FONT_SIZE)
-        text = font.render(" SCORE: " + str(snake.length), 1, (SCORE_COLOR))
+        text = font.render(" SCORE: " + str(snake.length), 1, (SCORE_COLOR), " alalalla ")
         textpos = text.get_rect()
         textpos.centerx = 50
         surface.blit(text, textpos)
